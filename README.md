@@ -25,8 +25,6 @@ go run server.go
 ```
 
 The project uses the por 8080, so, to see the project running, you need access 
-```
-http://localhost:8080
-```
+> http://localhost:8080
 With /hello the server will access the "index.html" file, and with /form the server will access the "form.html" file.
 The /form contains a form, where you can complete and send the informations by POST, and the server will return a message with those informations.
