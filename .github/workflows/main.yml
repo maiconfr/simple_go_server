@@ -38,6 +38,10 @@ jobs:
       run: | 
         mkdir -p dist
         cp teste-simple-go-server dist/
+        
+
+    - name: Deploy
+      run: |
         nohup dist/./teste-simple-go-server &
 
     # - name: Test 
