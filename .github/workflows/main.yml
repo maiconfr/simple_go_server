@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.21.4'
-    - run: go mod init server-go
+    #- run: go mod init server-go
     - run: go mod tidy
     - run: go build -o teste-simple-go-server
     - run: ./teste-simple-go-server
