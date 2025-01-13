@@ -25,27 +25,28 @@ jobs:
     #runs-on: ubuntu-latest
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     - name: Set up GO
       uses: actions/setup-go@v4
       with:
         go-version: '1.21.4'
     #- run: go mod init server-go
-    - run: go mod tidy
-    - run: go build -o teste-simple-go-server
+    - name: Install dependencies
+      run: go mod tidy
 
-    - name: Package
-      run: | 
+    - name: Build the executable
+      run: go build -o teste-simple-go-server
+
+    - name: Package the executable
+      run: |
         mkdir -p dist
         cp teste-simple-go-server dist/
-        
 
-    - name: Deploy
+    - name: Deploy and Run in tmux
       run: |
-        nohup dist/./teste-simple-go-server &
+        tmux new-session -d -s my_server "./dist/teste-simple-go-server"
 
-    # - name: Test 
-    #   run: go test -v ./teste-simple-go-server
+
 
 
 
