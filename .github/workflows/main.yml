@@ -7,10 +7,23 @@ on:
 
 jobs:
 
-  test:
+  # test:
+  #   #runs-on: ubuntu-latest
+  #   runs-on: self-hosted
+  #   needs: build
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Set up GO
+  #     uses: actions/setup-go@v4
+  #     with:
+  #       go-version: '1.21.4'
+  #   #- run: go mod init server-go
+  #   - run: go mod tidy
+  #   - run: go build -o teste-simple-go-server
+
+  build:
     #runs-on: ubuntu-latest
     runs-on: self-hosted
-    needs: build
     steps:
     - uses: actions/checkout@v4
     - name: Set up GO
@@ -21,19 +34,11 @@ jobs:
     - run: go mod tidy
     - run: go build -o teste-simple-go-server
 
-  build:
-   # runs-on: ubuntu-latest
-    runs-on: self-hosted
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up GO
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.21.4'
-    #- run: go mod init server-go
-    - run: go mod tidy
-    - run: go build -o teste-simple-go-server
-    - run: nohup ./teste-simple-go-server &
+    - name: Package
+      run: | 
+        mkdir -p dist
+        cp teste-simple-go-server dist/
+        nohup dist/./teste-simple-go-server &
 
     # - name: Test 
     #   run: go test -v ./teste-simple-go-server
