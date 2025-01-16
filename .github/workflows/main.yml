@@ -65,8 +65,8 @@ jobs:
 
     - name: Package the executable
       run: |
-        mkdir -p /opt/teste-simple-go-server
-        cp teste-simple-go-server /opt/teste-simple-go-server/
+        sudo mkdir -p /opt/teste-simple-go-server
+        sudo cp teste-simple-go-server /opt/teste-simple-go-server/
 
     - name: Create and start systemd service
       run: |
