@@ -20,7 +20,7 @@ jobs:
 
     - name: Kill application if running
       run: |
-        if pgrep teste-simple-go-server > /dev/null; then
+        if sudo systemctl is-active --quiet teste-simple-go-server; then
           sudo killall teste-simple-go-server
         else
           echo "No running process found for teste-simple-go-server"
