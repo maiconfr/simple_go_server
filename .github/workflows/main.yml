@@ -70,6 +70,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
+    needs: build
     steps:
     - name: Kill application
       run: killall teste-simple-go-server
