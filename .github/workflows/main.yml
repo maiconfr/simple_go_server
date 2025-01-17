@@ -7,45 +7,6 @@ on:
 
 jobs:
 
-  # test:
-  #   #runs-on: ubuntu-latest
-  #   runs-on: self-hosted
-  #   needs: build
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Set up GO
-  #     uses: actions/setup-go@v4
-  #     with:
-  #       go-version: '1.21.4'
-  #   #- run: go mod init server-go
-  #   - run: go mod tidy
-  #   - run: go build -o teste-simple-go-server
-
-  # build:
-  #   #runs-on: ubuntu-latest
-  #   runs-on: self-hosted
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: Set up GO
-  #     uses: actions/setup-go@v4
-  #     with:
-  #       go-version: '1.21.4'
-  #   #- run: go mod init server-go
-  #   - name: Install dependencies
-  #     run: go mod tidy
-
-  #   - name: Build the executable
-  #     run: go build -o teste-simple-go-server
-
-  #   - name: Package the executable
-  #     run: |
-  #       mkdir -p dist
-  #       cp teste-simple-go-server dist/
-
-  #   - name: Deploy and Run in tmux
-  #     run: |
-  #       tmux new-session -d -s my_server "./dist/teste-simple-go-server"
-
   build:
     runs-on: self-hosted
     steps:
@@ -57,8 +18,13 @@ jobs:
       with:
         go-version: '1.21.4'
 
-    - name: Kill application
-      run: killall teste-simple-go-server
+    - name: Kill application if running
+      run: |
+        if pgrep teste-simple-go-server > /dev/null; then
+          sudo killall teste-simple-go-server
+        else
+          echo "No running process found for teste-simple-go-server"
+        fi
 
     - name: Install dependencies
       run: go mod tidy
@@ -91,6 +57,18 @@ jobs:
         sudo systemctl daemon-reload
         sudo systemctl enable teste-simple-go-server
         sudo systemctl start teste-simple-go-server
+
+  check:
+    runs-on: self-hosted
+    needs: deploy
+    steps:
+    - name: Check if the application is running
+      run: |
+        if pgrep teste-simple-go-server > /dev/null; then
+          echo "Application is running."
+        else
+          echo "Application failed to start." && exit 1
+        fi
 
 
 
