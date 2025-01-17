@@ -76,8 +76,7 @@ jobs:
 
         [Service]
         ExecStart=/opt/teste-simple-go-server/teste-simple-go-server
-        Restart=always
-        User=runner
+        User=maicon
 
         [Install]
         WantedBy=multi-user.target" | sudo tee /etc/systemd/system/teste-simple-go-server.service
