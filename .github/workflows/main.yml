@@ -68,6 +68,11 @@ jobs:
         sudo mkdir -p /opt/teste-simple-go-server
         sudo cp teste-simple-go-server /opt/teste-simple-go-server/
 
+  deploy:
+    runs-on: self-hosted
+    steps:
+    - name: Kill application
+      run: killall teste-simple-go-server
     - name: Create and start systemd service
       run: |
         echo "[Unit]
