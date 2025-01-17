@@ -64,10 +64,10 @@ jobs:
     steps:
     - name: Check if the application is running
       run: |
-        if pgrep teste-simple-go-server > /dev/null; then
-          echo "Application is running."
+        if nc -zv localhost 8080; then
+          echo "Application is running and responding on port 8080."
         else
-          echo "Application failed to start." && exit 1
+          echo "Application is not responding on port 8080." && exit 1
         fi
 
 
